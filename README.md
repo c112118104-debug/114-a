@@ -29,3 +29,7 @@ color:
 ### ~~刪除~~
 ![NKUST](nkust.png "NKUST")
 
+|Left-Aligned  |Center Aligned  |Right Aligned|
+|:-------------|:-------------|:-------------|
+|col 3 is|some |$1600|
+
