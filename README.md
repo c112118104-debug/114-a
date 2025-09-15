@@ -15,5 +15,5 @@ color:
 ---
 <https://elearning.nkust.edu.tw>
 
-![NKUST](IMG logo.png "NKUST")
+![NKUST](logo.png "NKUST")
 
