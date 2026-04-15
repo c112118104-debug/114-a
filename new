@@ -1,0 +1,58 @@
+graph LR
+    User((使用者)) --> UI[前端介面 UI<br/>(Streamlit)]
+
+    subgraph Streamlit 應用程式 (Frontend & Logic)
+        Auth[認證與註冊模組]
+        Session[(Session State)]
+        AI[🤖 AI 行程規劃]
+        Manual[🔍 手動規劃]
+        History[📜 歷史紀錄檢視]
+        Output[📊 輸出呈現<br/>(UI, Graphviz, 下載)]
+    end
+
+    subgraph 本地資料庫 (Local Storage)
+        UserDB[(users_db.json)]
+        AttrDB[(taipei_attractions2.csv)]
+        HistDB[(history_db.json)]
+    end
+
+    subgraph 外部 API 服務 (External APIs)
+        Gemini[Google Gemini API]
+        GMaps[Google Maps API]
+        Weather[Open-Meteo Weather API]
+    end
+
+    %% 使用者與前端互動
+    UI --> Auth
+    Auth <-->|讀寫帳號| UserDB
+    Auth -->|登入狀態| Session
+
+    Session -. 共用狀態與快取 .-> AI
+    Session -. 共用狀態與快取 .-> Manual
+    Session -. 共用狀態與快取 .-> History
+
+    UI --> AI
+    UI --> Manual
+    UI --> History
+
+    %% AI 模式依賴
+    AI -->|1. 提示詞/生成| Gemini
+    AI -->|2. 檢索與防呆比對| AttrDB
+    AI -->|3. 氣溫/降雨快取| Weather
+    AI -->|4. 營業時間/距離/圖片| GMaps
+    AI -->|5. 儲存排程| HistDB
+    AI --> Output
+
+    %% 手動模式依賴
+    Manual -->|1. 分層檢索/篩選| AttrDB
+    Manual -->|2. 氣溫/降雨快取| Weather
+    Manual -->|3. 地點資訊/星級| GMaps
+    Manual -->|4. 儲存排程| HistDB
+    Manual --> Output
+
+    %% 歷史紀錄模式
+    History <-->|讀取/修改名稱/刪除| HistDB
+    History --> Output
+
+    %% 輸出端
+    Output -->|生成多點導航連結| GMaps
