@@ -1,3 +1,4 @@
+```mermaid
 graph LR
     User((使用者)) --> UI[前端介面 UI<br/>(Streamlit)]
 
@@ -56,3 +57,4 @@ graph LR
 
     %% 輸出端
     Output -->|生成多點導航連結| GMaps
+```
