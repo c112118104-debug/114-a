@@ -1,0 +1,6 @@
+streamlit
+pandas
+google-generativeai
+requests
+graphviz
+urllib3
